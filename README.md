@@ -32,9 +32,9 @@ Estimate of time needed to complete: 2hrs
 
 Start time: 2:50
 
-Finish time: 
+Finish time: 5:00
 
-Actual time needed to complete: 
+Actual time needed to complete:  2hr 10min
 
 ## Credit and Collaborations
 Codefellows supplied all starter code for this lab https://github.com/codefellows/can-of-books-frontend-template
