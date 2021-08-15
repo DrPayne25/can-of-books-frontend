@@ -1,11 +1,40 @@
-# Start your own "Can of Books" App
+# Lab 11
 
-This repository has starter code to begin work on creating your own online bookshelf.
+**Author**: Alex Payne and Phil Murphy
+**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
-## What can books do?
+## Overview
+This app will be a online bookshelf
 
-Books are life-changing. They have the power to enlighten, educate, entertain, heal, and help us grow. Build out this code base to create an web app to track what books have impacted you, and what's recommended to read next.
+## Getting Started
+1. Copy template from https://github.com/codefellows/can-of-books-frontend-template
+2. Clone to local machine 
+3. add .env to your .gitignore
+4. create a blank .env file
 
-## Use this template
+## Architecture
+<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
 
-Clone this repo to your own account with the green "Use this template" button. Then, add any collaborators. Now you are ready to start adding features! Deploy your site to let the world know which books have had the greatest impact on you, and what's recommended. Enjoy!
+## Change Log
+Name of feature: Setup - Lab 11 Part 1
+
+Estimate of time needed to complete: 20min
+
+Start time: 2:30
+
+Finish time: 2:40
+
+Actual time needed to complete: 10min
+
+Name of feature: Lab 11 Part 2 
+
+Estimate of time needed to complete: 2hrs
+
+Start time: 2:50
+
+Finish time: 5:00
+
+Actual time needed to complete:  2hr 10min
+
+## Credit and Collaborations
+Codefellows supplied all starter code for this lab https://github.com/codefellows/can-of-books-frontend-template
