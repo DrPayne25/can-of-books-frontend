@@ -15,8 +15,8 @@ import { withAuth0 } from '@auth0/auth0-react';
 class App extends React.Component {
 
   render() {
-    console.log('app', this.props);
-    console.log(this.props.auth0)
+    // console.log('app', this.props);
+    // console.log(this.props.auth0)
     const {isLoading, isAuthenticated} = this.props.auth0;
     
     if (isLoading) {
@@ -29,12 +29,12 @@ class App extends React.Component {
               <Header isAuthenticated={isAuthenticated}/>
               <Switch>
                 <Route exact path="/">
-                  {/* Done: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */ 
-                  isAuthenticated ? <BestBooks /> : <Login /> }
+                  {/* Done: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */} 
+                  {isAuthenticated ? <BestBooks /> : <Login /> }
                 </Route>
                 <Route exact path="/profile" >
-                {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */
-                isAuthenticated ? <Profile /> : <h1>Please Login above to see this page</h1>}
+                {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
+                {isAuthenticated ? <Profile /> : <h1>Please Login above to see this page</h1>}
                 </Route>
               </Switch>
               <Footer />
