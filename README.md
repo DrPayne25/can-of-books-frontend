@@ -6,6 +6,12 @@
 ## Overview
 This app will be a online bookshelf
 
+Lab 11 UML
+![uml](/img/uml%20for%20auth0.png)
+
+Lab 12 UML
+![uml2](/img/uml-auth0-mongo.png)
+
 ## Getting Started
 1. Copy template from https://github.com/codefellows/can-of-books-frontend-template
 2. Clone to local machine 

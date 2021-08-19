@@ -7,22 +7,38 @@ import axios from 'axios';
 import { withAuth0 } from '@auth0/auth0-react';
 
 class MyFavoriteBooks extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: [],
+    }
+  }
+
+  componentDidMount = async () => {
+
+    const serverResponse = await axios.get('http://localhost:3001/books');
+    console.log(serverResponse.data);
+    this.setState({
+      books: serverResponse.data,
+    })
+  }
 
   makeRequest = async () => {
 
-    const {getIdTokenClaims} = this.props.auth0
-    let tokenClaims = await getIdTokenClaims(); 
+    const { getIdTokenClaims } = this.props.auth0
+    let tokenClaims = await getIdTokenClaims();
     const jwt = tokenClaims.__raw;
     console.log(jwt);
-    const config = {headers: {"Authorization": `Bearer ${jwt}`}};
+    const config = { headers: { "Authorization": `Bearer ${jwt}` } };
 
-  const serverResponse = await axios.get('http://localhost:3001/test', config);
-  console.log(serverResponse);
+    const serverResponse = await axios.get('http://localhost:3001/test', config);
+    console.log(serverResponse);
 
   }
 
   render() {
-    return(
+    console.log(this.state);
+    return (
       <Jumbotron>
         <h1>My Favorite Books</h1>
         <p>
