@@ -4,6 +4,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import './BestBooks.css';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
+import Books from './Books'
 import { withAuth0 } from '@auth0/auth0-react';
 
 class MyFavoriteBooks extends React.Component {
@@ -15,8 +16,13 @@ class MyFavoriteBooks extends React.Component {
   }
 
   componentDidMount = async () => {
+    const { getIdTokenClaims } = this.props.auth0
+    let tokenClaims = await getIdTokenClaims();
+    const jwt = tokenClaims.__raw;
+    console.log(jwt);
+    const config = { headers: { "Authorization": `Bearer ${jwt}` } };
 
-    const serverResponse = await axios.get('http://localhost:3001/books');
+    const serverResponse = await axios.get('http://localhost:3001/books', config);
     console.log(serverResponse.data);
     this.setState({
       books: serverResponse.data,
@@ -37,15 +43,15 @@ class MyFavoriteBooks extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    console.log(this.state.books);
     return (
       <Jumbotron>
         <h1>My Favorite Books</h1>
         <p>
           This is a collection of my favorite books
         </p>
+        {this.state.books.length > 0 ? <Books bookData={this.state.books}/> : <p>No Books Are Found</p>}
         <Button onClick={this.makeRequest}>Check the Server</Button>
-        <p>Check the Console for this request</p>
       </Jumbotron>
     )
   }
