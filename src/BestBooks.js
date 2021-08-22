@@ -5,6 +5,7 @@ import './BestBooks.css';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Books from './Books'
+import BookForm from './BookForm';
 import { withAuth0 } from '@auth0/auth0-react';
 
 class MyFavoriteBooks extends React.Component {
@@ -19,14 +20,39 @@ class MyFavoriteBooks extends React.Component {
     const { getIdTokenClaims } = this.props.auth0
     let tokenClaims = await getIdTokenClaims();
     const jwt = tokenClaims.__raw;
-    console.log(jwt);
+    // console.log(jwt);
     const config = { headers: { "Authorization": `Bearer ${jwt}` } };
 
     const serverResponse = await axios.get('http://localhost:3001/books', config);
-    console.log(serverResponse.data);
+    // console.log(serverResponse.data);
     this.setState({
       books: serverResponse.data,
     })
+  }
+
+  handleNewBook = async (bookInfo) => {
+    try {
+      let response = await axios.post('http://localhost:3001/books', bookInfo);
+      const newBook = response.data
+      this.setState({
+        books: [...this.state.books, newBook]
+      })
+    } catch(err){
+      console.log(err);
+    }
+  }
+
+  handleDelete = async (id) => {
+    // console.log(id);
+    try{
+      await axios.delete(`http://localhost:3001/books/${id}`);
+      let remainingBooks = this.state.books.filter(book => book._id !== id);
+      this.setState({
+        books: remainingBooks
+      })
+    }catch (err){
+      console.log(err);
+    }
   }
 
   makeRequest = async () => {
@@ -45,14 +71,17 @@ class MyFavoriteBooks extends React.Component {
   render() {
     console.log(this.state.books);
     return (
+      <>
+      <BookForm handleNewBook={this.handleNewBook}/>
       <Jumbotron>
         <h1>My Favorite Books</h1>
         <p>
           This is a collection of my favorite books
         </p>
-        {this.state.books.length > 0 ? <Books bookData={this.state.books}/> : <p>No Books Are Found</p>}
-        <Button onClick={this.makeRequest}>Check the Server</Button>
+        {this.state.books.length > 0 ? <Books bookData={this.state.books} handleDelete={this.handleDelete}/> : <p>No Books Are Found</p>}
+        <Button className='Button' onClick={this.makeRequest}>Check the Server</Button>
       </Jumbotron>
+      </>
     )
   }
 }
