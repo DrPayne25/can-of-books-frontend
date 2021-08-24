@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
+import { withAuth0 } from '@auth0/auth0-react';
 
 class BookForm extends React.Component {
   constructor(props){
@@ -15,7 +16,7 @@ class BookForm extends React.Component {
     let name = e.target.title.value;
     let description = e.target.description.value;
     let status = e.target.status.value;
-    let email = 'alex.payne1125@gmail.com'
+    let email = this.props.auth0.user.email;
     this.props.handleNewBook({name, description, status, email});
   }
 
@@ -45,4 +46,4 @@ class BookForm extends React.Component {
   }
 }
 
-export default BookForm;
+export default withAuth0(BookForm);
