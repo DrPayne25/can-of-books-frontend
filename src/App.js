@@ -16,8 +16,9 @@ class App extends React.Component {
 
   render() {
     // console.log('app', this.props);
-    // console.log(this.props.auth0)
-    const {isLoading, isAuthenticated} = this.props.auth0;
+    const {isLoading, isAuthenticated,} = this.props.auth0;
+    // console.log(this.props.auth0.user);
+    // const email = this.props.auth0.user.email;
     
     if (isLoading) {
       return <h2> Still Loading....</h2>

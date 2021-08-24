@@ -2,7 +2,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import './BestBooks.css';
-import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Books from './Books'
 import BookForm from './BookForm';
@@ -17,11 +16,14 @@ class MyFavoriteBooks extends React.Component {
   }
 
   componentDidMount = async () => {
-    const { getIdTokenClaims } = this.props.auth0
+    const { getIdTokenClaims } = this.props.auth0;
     let tokenClaims = await getIdTokenClaims();
     const jwt = tokenClaims.__raw;
-    // console.log(jwt);
-    const config = { headers: { "Authorization": `Bearer ${jwt}` } };
+    console.log(jwt);
+    const config = { 
+      headers: { "Authorization": `Bearer ${jwt}` },
+      params: { email: this.props.auth0.user.email},
+     };
 
     const serverResponse = await axios.get('http://localhost:3001/books', config);
     // console.log(serverResponse.data);
@@ -43,9 +45,17 @@ class MyFavoriteBooks extends React.Component {
   }
 
   handleDelete = async (id) => {
-    // console.log(id);
     try{
-      await axios.delete(`http://localhost:3001/books/${id}`);
+      const { getIdTokenClaims } = this.props.auth0;
+      let tokenClaims = await getIdTokenClaims();
+      const jwt = tokenClaims.__raw;
+      const config = { 
+        headers: { "Authorization": `Bearer ${jwt}` },
+        params: { email: this.props.auth0.user.email}, 
+      };
+
+
+      await axios.delete(`http://localhost:3001/books/${id}`, config);
       let remainingBooks = this.state.books.filter(book => book._id !== id);
       this.setState({
         books: remainingBooks
@@ -55,21 +65,25 @@ class MyFavoriteBooks extends React.Component {
     }
   }
 
-  makeRequest = async () => {
+  // makeRequest = async () => {
 
-    const { getIdTokenClaims } = this.props.auth0
-    let tokenClaims = await getIdTokenClaims();
-    const jwt = tokenClaims.__raw;
-    console.log(jwt);
-    const config = { headers: { "Authorization": `Bearer ${jwt}` } };
+  //   const { getIdTokenClaims } = this.props.auth0
+  //   let tokenClaims = await getIdTokenClaims();
+  //   const jwt = tokenClaims.__raw;
+  //   console.log(jwt);
+  //   const config = { 
+  //     headers: { "Authorization": `Bearer ${jwt}` },
+  //     params: { email: this.props.auth0.user.email}, 
+  //    };
 
-    const serverResponse = await axios.get('http://localhost:3001/test', config);
-    console.log(serverResponse);
+  //   const serverResponse = await axios.get('http://localhost:3001/test', config);
+  //   console.log(serverResponse);
 
-  }
+  // }
 
   render() {
-    console.log(this.state.books);
+    // console.log(this.state.books);
+    // console.log(this.props.auth0.user.email)
     return (
       <>
       <BookForm handleNewBook={this.handleNewBook}/>
@@ -79,7 +93,7 @@ class MyFavoriteBooks extends React.Component {
           This is a collection of my favorite books
         </p>
         {this.state.books.length > 0 ? <Books bookData={this.state.books} handleDelete={this.handleDelete}/> : <p>No Books Are Found</p>}
-        <Button className='Button' onClick={this.makeRequest}>Check the Server</Button>
+        {/* <Button className='Button' onClick={this.makeRequest}>Check the Server</Button> */}
       </Jumbotron>
       </>
     )
