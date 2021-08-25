@@ -53,8 +53,6 @@ class MyFavoriteBooks extends React.Component {
         headers: { "Authorization": `Bearer ${jwt}` },
         params: { email: this.props.auth0.user.email}, 
       };
-
-
       await axios.delete(`http://localhost:3001/books/${id}`, config);
       let remainingBooks = this.state.books.filter(book => book._id !== id);
       this.setState({
@@ -65,20 +63,41 @@ class MyFavoriteBooks extends React.Component {
     }
   }
 
-  // makeRequest = async () => {
+  handleUpdate = (book) => {
+    axios.put(`http://localhost:3001/books/${book._id}}`, book);
+    const updateBooks = this.state.books.map(stateBook => {
+      if(stateBook._id === book._id) {
+        return book
+      }
+      else {
+        return stateBook;
+      }
+    });
+    this.setState({books: updateBooks})
+  }
 
-  //   const { getIdTokenClaims } = this.props.auth0
-  //   let tokenClaims = await getIdTokenClaims();
-  //   const jwt = tokenClaims.__raw;
-  //   console.log(jwt);
-  //   const config = { 
-  //     headers: { "Authorization": `Bearer ${jwt}` },
-  //     params: { email: this.props.auth0.user.email}, 
-  //    };
-
-  //   const serverResponse = await axios.get('http://localhost:3001/test', config);
-  //   console.log(serverResponse);
-
+  // handleUpdate = async (book) => {
+  //   try {
+  //     const { getIdTokenClaims } = this.props.auth0;
+  //     let tokenClaims = await getIdTokenClaims();
+  //     const jwt = tokenClaims.__raw;
+  //     const book = {
+  //       headers: { "Authorization": `Bearer ${jwt}` },
+  //       params: { email: this.props.auth0.user.email },
+  //     };
+  //     await axios.put(`http://localhost:3001/books/${book._id}}`, book);
+  //     const updateBooks = this.state.books.map(stateBook => {
+  //       if (stateBook._id === book._id) {
+  //         return book
+  //       }
+  //       else {
+  //         return stateBook;
+  //       }
+  //     });
+  //     this.setState({ books: updateBooks })
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
   // }
 
   render() {
@@ -92,7 +111,7 @@ class MyFavoriteBooks extends React.Component {
         <p>
           This is a collection of my favorite books
         </p>
-        {this.state.books.length > 0 ? <Books bookData={this.state.books} handleDelete={this.handleDelete}/> : <p>No Books Are Found</p>}
+        {this.state.books.length > 0 ? <Books handleUpdate={this.handleUpdate} bookData={this.state.books} handleDelete={this.handleDelete}/> : <p>No Books Are Found</p>}
         {/* <Button className='Button' onClick={this.makeRequest}>Check the Server</Button> */}
       </Jumbotron>
       </>

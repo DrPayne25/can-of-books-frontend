@@ -13,11 +13,11 @@ class BookForm extends React.Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    let name = e.target.title.value;
+    let title = e.target.title.value;
     let description = e.target.description.value;
     let status = e.target.status.value;
     let email = this.props.auth0.user.email;
-    this.props.handleNewBook({name, description, status, email});
+    this.props.handleNewBook({title, description, status, email});
   }
 
   render() {
