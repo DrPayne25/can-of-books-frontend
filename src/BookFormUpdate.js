@@ -43,7 +43,7 @@ class BookFormUpdate extends React.Component {
   
 
   render() {
-    console.log('bookFormUpdateState:', this.props.book)
+    console.log('bookFormUpdateState:', this.state)
     return (
       <Container id='formContainer'>
         <Form onSubmit={this.handleSubmit}>

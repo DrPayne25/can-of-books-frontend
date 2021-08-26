@@ -63,8 +63,9 @@ class MyFavoriteBooks extends React.Component {
     }
   }
 
-  handleUpdate = (book) => {
-    axios.put(`http://localhost:3001/books/${book._id}}`, book);
+  handleUpdate = async (book) => {
+    console.log(book._id);
+    await axios.put(`http://localhost:3001/books/${book._id}`, book);
     const updateBooks = this.state.books.map(stateBook => {
       if(stateBook._id === book._id) {
         return book

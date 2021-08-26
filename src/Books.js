@@ -46,7 +46,7 @@ class Books extends React.Component {
     return arr;
   }
   render() {
-    console.log('BookForm:', this.state);
+    // console.log('BookForm:', this.state);
     return (
       <>
         <Container>
